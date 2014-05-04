@@ -3,12 +3,64 @@
 <head>
   <title>PhotoSearch</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<div class="container">	
+	<header class="clearfix">
+		<h1>Photo Search <span>using Instagram API</span></h1>
+		<form action="?" method="get">
+			<input type="text" name="q" placeholder="Search Instagram photos..." autofocus/>
+		</form>
 
+	</header>
+	<div class="main">
+		
+		<%= yield %>
+
+	</div><!-- /main -->
+</div><!-- /container -->
+
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+<script type="text/javascript">
+	$(document).ready(function(){
+		Grid.init();
+
+		$('#centerButton').on('click', 'button#loadmore', function(event){
+			event.preventDefault();
+			var nextid = $('button#loadmore').data('next-id');
+			var tag = '<%= @tag %>';
+			var endpoint = 'https://api.instagram.com/v1/tags/'+ tag +'/media/recent?access_token=353749247.4f6bccc.e0ef76fa6bc54751994cf2ba58a3f7f2&amp=&max_tag_id=' + nextid;
+			var $image = '';
+			$.ajax({
+				type: 'GET',
+				dataType: 'jsonp',
+				url: endpoint,
+				success: function(data){
+					$.each(data.data, function(key, value){
+						var caption = (value['caption'] != null) ? value['caption']['text'] : '';
+						var $image = $('<li><a href="'+ value['link'] +'" data-largesrc="'+ value['images']['standard_resolution']['url'] +'" data-title="@'+ value['user']['username'] +'" data-description="'+ caption +'">' +
+							'<img src="'+ value['images']['low_resolution']['url'] +'" />' +
+							'</a></li>').appendTo( $('#og-grid') );
+						Grid.addItems( $image );
+					});
+
+					// store new 'next-id'
+					$('button#loadmore').data('next-id', data.pagination.next_max_tag_id);
+				},
+				beforeSend: function(){
+					$('button#loadmore').text('Loading').animate({opacity: 0.7});
+				},
+				complete: function(){
+					$('button#loadmore').text('Load more').show();
+				}
+			});
+			return false;
+		});
+
+	});
+
+</script>
 </body>
 </html>

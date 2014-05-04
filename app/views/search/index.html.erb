@@ -1,0 +1,20 @@
+<ul id="og-grid" class="og-grid">
+
+<% @results.each do |instagram| %>
+	
+	<% if instagram.caption %>
+		<% caption = instagram.caption.text %>
+	<% end %>
+	<li>
+		<a href="<%= instagram.link %>" data-largesrc="<%= instagram.images.standard_resolution.url %>" data-title="@<%= instagram.user.username %>" data-description="<%= caption %>">
+			<%= image_tag instagram.images.low_resolution.url %>
+		</a>
+	</li>
+
+<% end %>
+</ul>
+
+
+<p id="centerButton"><button id="loadmore" class="btn btn-lg btn-default" data-next-id="<%= @results.pagination.next_max_tag_id %>">Load more</button></p>
+
+
