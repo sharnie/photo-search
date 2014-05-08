@@ -3,13 +3,14 @@
 <head>
   <title>PhotoSearch</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <div class="container">	
 	<header class="clearfix">
-		<h1>Photo Search <span>using Instagram API</span></h1>
+		<h1>Photo Search <span>Using Instagram API <i class="fa fa-heart" style="color: #c0392b;"></i></span></h1>
 		<form action="?" method="get">
 			<input type="text" name="q" placeholder="Search Instagram photos..." autofocus/>
 		</form>
@@ -50,10 +51,10 @@
 					$('button#loadmore').data('next-id', data.pagination.next_max_tag_id);
 				},
 				beforeSend: function(){
-					$('button#loadmore').text('Loading').animate({opacity: 0.7});
+					$('button#loadmore').text('Loading').fadeOut('fast');
 				},
 				complete: function(){
-					$('button#loadmore').text('Load more').show();
+					$('button#loadmore').text('Load more').fadeIn('fast');
 				}
 			});
 			return false;

@@ -177,6 +177,11 @@ input[type="text"] {
 	font-size: 16px;
 	margin-top: 40px;
 	width: 300px;
+	outline: 0;
+	border: 1px solid rgba(0,0,0,0.2);
+}
+input[type="text"]:focus, input[type="text"]:active {
+	border: 1px solid #3498db;
 }
 
 @-webkit-keyframes loader {
