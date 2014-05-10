@@ -2,5 +2,3 @@ Photo Search with Instagram API
 ==================================
 
 This application is used to search Instagram images by keywords. For example: "food" will return images with the tag "food".
-
-![Codeship Status](https://www.codeship.io/projects/5795fcf0-b8ea-0131-7963-32260bb6295c/status)
