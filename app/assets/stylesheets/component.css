@@ -175,6 +175,8 @@
 input[type="text"] {
 	padding: 8px;
 	font-size: 16px;
+	font-family: inherit !important;
+	font-weight: 100;
 	margin-top: 40px;
 	width: 300px;
 	outline: 0;
